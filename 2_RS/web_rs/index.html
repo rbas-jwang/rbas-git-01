@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="shortcut icon" type="image/png" href="rs_icon.png">
+<title>RABS RS</title>
+
+<head>
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgb(0, 0, 0);
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+        }
+
+        .grid {
+            display: grid;
+            height: 99vh;
+            place-items: center;
+        }
+
+        .top {
+            margin: 0mm;
+            width: 99%;
+        }
+
+        .top3 {
+            margin: 10mm;
+            margin-bottom: -10mm;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding-bottom: 3mm;
+        }
+
+        .top9 {
+            margin: 2mm;
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            padding-bottom: 3mm;
+        }
+
+        .top16 {
+            display: grid;
+            margin: 1mm;
+            padding: 1mm;
+            grid-template-columns: repeat(18, 1fr);
+        }
+
+        .col_1 {
+            margin: 1mm;
+            margin-top: 0mm;
+            margin-bottom: 0mm;
+            padding: 2mm;
+        }
+
+        .col_2 {
+            margin-top: 0mm;
+            margin-bottom: 0mm;
+            padding: 2mm;
+        }
+
+        textarea {
+            border: 1px solid rgb(3, 3, 3);
+            background-color: rgb(90, 90, 90);
+            width: 70%;
+            font-size: 2em;
+            margin: 15mm;
+            height: 70mm;
+            margin-top: 2mm;
+            margin-bottom: 2mm;
+            padding: 3mm;
+            resize: horizontal;
+        }
+
+        h1 {
+            color: rgb(50, 160, 240);
+            text-align: center;
+            font-size: 4em;
+            margin: 10mm;
+            margin-bottom: 1mm;
+        }
+
+        h2 {
+            text-align: right;
+            font-size: 1em;
+            margin: 5mm;
+            margin-top: -10mm;
+        }
+
+        h3 {
+            color: rgb(90, 240, 240);
+            text-align: left;
+            font-size: 2em;
+            margin: 1mm;
+            margin-top: 3mm;
+        }
+
+        h4 {
+            border: 1px solid rgb(3, 3, 3);
+            background-color: rgb(90, 90, 90);
+            text-align: center;
+            font-size: 3em;
+            margin: 8%;
+            margin-top: 2mm;
+            margin-bottom: 2mm;
+            padding: 1mm;
+        }
+
+        h5 {
+            color: rgb(90, 240, 240);
+            text-align: left;
+            font-size: 1.5em;
+            margin: 1mm;
+            margin-top: 3mm;
+            margin-left: 5mm;
+        }
+
+        h6 {
+            border: 1px solid rgb(3, 3, 3);
+            background-color: rgb(90, 90, 90);
+            text-align: center;
+            font-size: 1.5em;
+            margin: 0mm;
+            margin-left: 8mm;
+            margin-right: 3mm;
+            padding: 0.5mm;
+        }
+
+        h7 {
+            border: 1px solid rgb(3, 3, 3);
+            background-color: rgb(80, 80, 80);
+            text-align: center;
+            font-size: 1.2em;
+            margin: 0mm;
+            padding: 0.5mm;
+        }
+
+        .button {
+            color: rgb(226, 101, 120);
+            border: 3px solid rgb(226, 101, 120);
+            background-color: rgb(56, 56, 56);
+            height: 15mm;
+            width: 28%;
+            border-radius: 5mm;
+            font-size: 2.5em;
+            margin: 8mm;
+            margin-bottom: 2mm;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #d1eeff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid">
+        <div class="top">
+            <div class="col_1">
+                <h1 id = "rs_id">RBAS RS-</h1>
+                <h2>© last update 2022.02.26</h2>
+                <div class="top3">
+                    <div class="col_1">
+                        <h3>chain </h3>
+                        <h4 id="chain">9a912413024f8687a4b856cf</h4>
+                        <h3> block </h3>
+                        <h4 id="block">8bd2a5b855f4c44da110e8c8a352912b
+                            391d7b404916f5c295c733386c4b10b8</h4>
+                        <h3> next chain = hash256(chain+block)</h3>
+                        <h4 id="next_chain">9a912413024f8687a4b856cf</h4>
+                    </div>
+
+                    <div class="col_1">
+                        <h3>time</h3>
+                        <h4 id="time"> 2022/03/05 12:23:45</h4>
+                        <h3>tick </h3>
+                        <h4 id="rs_tick">1234567890</h4>
+                        <h3>db_status  (O:sync, X:idle)</h3>
+                        <h4 id="db_status">O O O O O O O O O</h4>
+                    </div>                    
+                    <div class="col_1">
+                        <h3>input total</h3>
+                        <h4 id="rs_in_total">123456789</h4>
+                        <h3>input error</h3>
+                        <h4 id="rs_in_err">12345</h4>
+                        <h3>query total</h3>
+                        <h4 id="rs_q_total">1234567</h4>
+                        <h3>query error</h3>
+                        <h4 id="rs_q_err">1234</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col_1">
+                <h1>Database status</h1>
+                <div class="top9">
+                    <div class="col_2">
+                        <h3>DB_1</h3>
+                        <h5>block hash </h5>
+                        <h6 class="block">.</h6>
+                        <h5>input total</h5>
+                        <h6 class="db_in_total">.</h6>
+                        <h5>input error</h5>
+                        <h6 class="db_in_err">.</h6>
+                        <h5>query total</h5>
+                        <h6 class="db_q_total">.</h6>
+                        <h5>query error</h5>
+                        <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_2</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_3</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_4</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_5</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_6</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_7</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_8</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+                    <div class="col_2">
+                       <h3>DB_9</h3>
+                       <h5>block hash </h5>
+                       <h6 class="block">.</h6>
+                       <h5>input total</h5>
+                       <h6 class="db_in_total">.</h6>
+                       <h5>input error</h5>
+                       <h6 class="db_in_err">.</h6>
+                       <h5>query total</h5>
+                       <h6 class="db_q_total">.</h6>
+                       <h5>query error</h5>
+                       <h6 class="db_q_err">.</h6>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col_1">
+                <h1>Log data</h1>
+                <div class="top16">
+                    <h3>tick</h3>
+                    <h3>time</h3>
+                    <h3>status</h3>
+                    <h3>in_total</h3>
+                    <h3>q_total</h3>
+                    <h3>in_err</h3>
+                    <h3>q_err</h3>
+                   <h3>DB1_block</h3>
+                   <h3>DB2_block</h3>
+                   <h3>DB3_block</h3>
+                   <h3>DB4_block</h3>
+                   <h3>DB5_block</h3>
+                   <h3>DB6_block</h3>
+                   <h3>DB7_block</h3>
+                   <h3>DB8_block</h3>
+                   <h3>DB9_block</h3>
+                   <h3>chain</h3>
+                   <h3>next_chain</h3>
+                </div>
+                <div class="top16">
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+
+                </div>
+                <div class="top16">
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+                    <h7 class="tick">.</h7>
+                    <h7 class="time">.</h7>
+                    <h7 class="status">.</h7>
+                    <h7 class="in_total">.</h7>
+                    <h7 class="q_total">.</h7>
+                    <h7 class="in_err">.</h7>
+                    <h7 class="q_err">.</h7>
+                    <h7 class="rs1_status">.</h7>
+                    <h7 class="rs2_status">.</h7>
+                    <h7 class="rs3_status">.</h7>
+                    <h7 class="rs4_status">.</h7>
+                    <h7 class="rs5_status">.</h7>
+                    <h7 class="rs6_status">.</h7>
+                    <h7 class="rs7_status">.</h7>
+                    <h7 class="rs8_status">.</h7>
+                    <h7 class="rs9_status">.</h7>
+                    <h7 class="chain">.</h7>
+                    <h7 class="next_chain">.</h7>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+    <script src="web_rs.js">
+    </script>
+</html>
